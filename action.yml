@@ -53,5 +53,5 @@ runs:
     id: set-destinations
     shell: bash
     run: |
-      echo "destination_json=/opt/${{ steps.install-sdk.outputs.sdk_name }}/${{ inputs.inputs.distribution }}.json" >> "$GITHUB_OUTPUT"
-      echo "destination_static_json=/opt/${{ steps.install-sdk.outputs.sdk_name }}/${{ inputs.inputs.distribution }}-static.json" >> "$GITHUB_OUTPUT"
+      echo "destination_json=/opt/${{ steps.install-sdk.outputs.sdk_name }}/${{ inputs.distribution }}.json" >> "$GITHUB_OUTPUT"
+      echo "destination_static_json=/opt/${{ steps.install-sdk.outputs.sdk_name }}/${{ inputs.distribution }}-static.json" >> "$GITHUB_OUTPUT"
