@@ -4,26 +4,19 @@ inputs:
   swift-version:
     description: The Swift version of the SDK to install (MUST match host Swift version).
     required: true
-  distro:
-    description: Distribution name of the SDK to install.
-    default: debian
+  distribution:
+    description: Distribution name and release of the SDK to install.
+    default: debian-bookworm
     type: choice
     options:
-      - debian
-      - ubuntu
-      - raspios
+      - debian-bullseye
+      - debian-bookworm
+      - ubuntu-focal
+      - ubuntu-jammy
+      - ubuntu-noble
+      - raspios-bullseye
+      - raspios-bookworm
     required: true
-  release:
-    description: Distribution release of the SDK to install.
-    default: bookworm
-    type: choice
-    options:
-      - bullseye
-      - bookworm
-      - focal
-      - jammy
-      - noble
-    required: true 
   arch:
     description: Target architecture of the SDK to install.
     type: choice
@@ -51,7 +44,7 @@ runs:
     id: install-sdk
     shell: bash
     run: |
-      SDK_NAME=swift-${{ inputs.swift-version }}-RELEASE-${{ inputs.distro }}-${{ inputs.release }}-${{ inputs.arch }}
+      SDK_NAME=swift-${{ inputs.swift-version }}-RELEASE-${{ inputs.distribution }}-${{ inputs.arch }}
       wget https://github.com/xtremekforever/swift-armv7/releases/download/${{ inputs.swift-version }}/${SDK_NAME}-sdk.tar.gz
       tar -xf ${SDK_NAME}-sdk.tar.gz
       mv ${SDK_NAME} /opt/${SDK_NAME}
@@ -60,5 +53,5 @@ runs:
     id: set-destinations
     shell: bash
     run: |
-      echo "destination_json=/opt/${{ steps.install-sdk.outputs.sdk_name }}/${{ inputs.distro }}-${{ inputs.release }}.json" >> "$GITHUB_OUTPUT"
-      echo "destination_static_json=/opt/${{ steps.install-sdk.outputs.sdk_name }}/${{ inputs.distro }}-${{ inputs.release }}-static.json" >> "$GITHUB_OUTPUT"
+      echo "destination_json=/opt/${{ steps.install-sdk.outputs.sdk_name }}/${{ inputs.inputs.distribution }}.json" >> "$GITHUB_OUTPUT"
+      echo "destination_static_json=/opt/${{ steps.install-sdk.outputs.sdk_name }}/${{ inputs.inputs.distribution }}-static.json" >> "$GITHUB_OUTPUT"
