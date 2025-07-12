@@ -53,7 +53,7 @@ runs:
     run: |
       SDK_NAME=swift-${{ inputs.swift-version }}-RELEASE-${{ inputs.distro }}-${{ inputs.release }}-${{ inputs.arch }}
       wget https://github.com/xtremekforever/swift-armv7/releases/download/${{ inputs.swift-version }}/${SDK_NAME}-sdk.tar.gz
-      tar -xvf ${SDK_NAME}-sdk.tar.gz
+      tar -xf ${SDK_NAME}-sdk.tar.gz
       mv ${SDK_NAME} /opt/${SDK_NAME}
       echo "sdk_name=${SDK_NAME}" >> "$GITHUB_OUTPUT"
   - name: Set Destinations
