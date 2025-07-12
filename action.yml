@@ -1,0 +1,64 @@
+name: Install SDK for cross-compiling Swift for Linux armv6 and armv7 architectures.
+description: This will download and install Swift compiled for Linux armhf and give the paths to the destination.json files.
+inputs:
+  swift-version:
+    description: The Swift version of the SDK to install (MUST match host Swift version).
+    required: true
+  distro:
+    description: Distribution name of the SDK to install.
+    default: debian
+    type: choice
+    options:
+      - debian
+      - ubuntu
+      - raspios
+    required: true
+  release:
+    description: Distribution release of the SDK to install.
+    default: bookworm
+    type: choice
+    options:
+      - bullseye
+      - bookworm
+      - focal
+      - jammy
+      - noble
+    required: true 
+  arch:
+    description: Target architecture of the SDK to install.
+    type: choice
+    options:
+      - armv6
+      - armv7
+    required: true
+outputs:
+  sdk_name:
+    description: Name of the SDK that is installed to /opt.
+    value: ${{ steps.install-sdk.outputs.sdk_name }}
+  destination_json:
+    description: The destination.json file to use to dynamically cross-compile.
+    value: ${{ steps.set-destinations.outputs.destination_json }}
+  destination_static_json:
+    description: The destination.json file to use to statically cross-compile.
+    value: ${{ steps.set-destinations.outputs.destination_static_json }}
+runs:
+  using: "composite"
+  steps:
+  - name: Install Dependencies
+    shell: bash
+    run: apt update -y && apt install wget -y
+  - name: Install SDK
+    id: install-sdk
+    shell: bash
+    run: |
+      SDK_NAME=swift-${{ inputs.swift-version }}-RELEASE-${{ inputs.distro }}-${{ inputs.release }}-${{ inputs.arch }}
+      wget https://github.com/xtremekforever/swift-armv7/releases/download/${{ inputs.swift-version }}/${SDK_NAME}-sdk.tar.gz
+      tar -xvf ${SDK_NAME}-sdk.tar.gz
+      mv ${SDK_NAME} /opt/${SDK_NAME}
+      echo "sdk_name=${SDK_NAME}" >> "$GITHUB_OUTPUT"
+  - name: Set Destinations
+    id: set-destinations
+    shell: bash
+    run: |
+      echo "destination_json=/opt/${{ steps.install-sdk.outputs.sdk_name }}/${{ inputs.distro }}-${{ inputs.release }}.json" >> "$GITHUB_OUTPUT"
+      echo "destination_static_json=/opt/${{ steps.install-sdk.outputs.sdk_name }}/${{ inputs.distro }}-${{ inputs.release }}-static.json" >> "$GITHUB_OUTPUT"
