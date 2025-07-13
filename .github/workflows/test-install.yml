@@ -1,0 +1,70 @@
+name: Test Install SDK
+
+on:
+  push:
+
+jobs:
+  container:
+    strategy:
+      matrix:
+        swift-version: ["6.1.2"]
+        distribution:
+          - debian-bullseye
+          - debian-bookworm
+          - ubuntu-focal
+          - ubuntu-jammy
+          - ubuntu-noble
+          - raspios-bullseye
+          - raspios-bookworm
+        arch: [armv7]
+    name: Install in Container
+    runs-on: ubuntu-latest
+    container: swift:${{ matrix.swift-version }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install SDK
+      uses: ./
+      id: target-sdk
+      with:
+        swift-version: ${{ matrix.swift-version }}
+        distribution: ${{ matrix.distribution }}
+        arch: ${{ matrix.arch }}
+    - name: Verify SDK
+      shell: bash
+      run: |
+        set -x
+        ls -l /opt/${{ steps.target-sdk.outputs.sdk_name }}
+        cat ${{ steps.target-sdk.outputs.destination_json }}
+        cat ${{ steps.target-sdk.outputs.destination_static_json }}
+
+  runner:
+    strategy:
+      matrix:
+        swift-version: ["6.1.2"]
+        distribution:
+          - debian-bullseye
+          - debian-bookworm
+          - ubuntu-focal
+          - ubuntu-jammy
+          - ubuntu-noble
+          - raspios-bullseye
+          - raspios-bookworm
+        arch: [armv7]
+    name: Install in GitHub Runner
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install SDK
+      uses: ./
+      id: target-sdk
+      with:
+        swift-version: ${{ matrix.swift-version }}
+        distribution: ${{ matrix.distribution }}
+        arch: ${{ matrix.arch }}
+    - name: Verify SDK
+      shell: bash
+      run: |
+        set -x
+        ls -l /opt/${{ steps.target-sdk.outputs.sdk_name }}
+        cat ${{ steps.target-sdk.outputs.destination_json }}
+        cat ${{ steps.target-sdk.outputs.destination_static_json }}

@@ -39,7 +39,11 @@ runs:
   steps:
   - name: Install Dependencies
     shell: bash
-    run: apt update -y && apt install wget -y
+    run: |
+        APT_CMD="apt-get"
+        if [ "$EUID" -ne 0 ]; then APT_CMD="sudo ${APT_CMD}"; fi
+        ${APT_CMD} update -y && ${APT_CMD} install wget -y
+
   - name: Install SDK
     id: install-sdk
     shell: bash
@@ -47,8 +51,14 @@ runs:
       SDK_NAME=swift-${{ inputs.swift-version }}-RELEASE-${{ inputs.distribution }}-${{ inputs.arch }}
       wget https://github.com/xtremekforever/swift-armv7/releases/download/${{ inputs.swift-version }}/${SDK_NAME}-sdk.tar.gz
       tar -xf ${SDK_NAME}-sdk.tar.gz
-      mv ${SDK_NAME} /opt/${SDK_NAME}
+
+      # Use sudo if not root
+      MV_CMD="mv"
+      if [ "$EUID" -ne 0 ]; then MV_CMD="sudo ${MV_CMD}"; fi
+      ${MV_CMD} ${SDK_NAME} /opt/${SDK_NAME}
+
       echo "sdk_name=${SDK_NAME}" >> "$GITHUB_OUTPUT"
+
   - name: Set Destinations
     id: set-destinations
     shell: bash
