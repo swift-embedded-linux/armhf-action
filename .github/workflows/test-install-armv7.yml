@@ -1,13 +1,24 @@
-name: Test Install SDK
+name: Test Install SDKs (armv7)
 
 on:
   push:
+  workflow_dispatch:
 
 jobs:
   container:
     strategy:
+      fail-fast: false
       matrix:
-        swift-version: ["6.1.2"]
+        swift-version:
+          - '5.10'
+          - '5.10.1'
+          - '6.0'
+          - '6.0.1'
+          - '6.0.2'
+          - '6.0.3'
+          - '6.1'
+          - '6.1.1'
+          - '6.1.2'
         distribution:
           - debian-bullseye
           - debian-bookworm
@@ -16,8 +27,7 @@ jobs:
           - ubuntu-noble
           - raspios-bullseye
           - raspios-bookworm
-        arch: [armv7]
-    name: Install in Container
+    name: Container
     runs-on: ubuntu-latest
     container: swift:${{ matrix.swift-version }}
     steps:
@@ -28,7 +38,7 @@ jobs:
       with:
         swift-version: ${{ matrix.swift-version }}
         distribution: ${{ matrix.distribution }}
-        arch: ${{ matrix.arch }}
+        arch: armv7
     - name: Verify SDK
       shell: bash
       run: |
@@ -39,8 +49,18 @@ jobs:
 
   runner:
     strategy:
+      fail-fast: false
       matrix:
-        swift-version: ["6.1.2"]
+        swift-version:
+          - '5.10'
+          - '5.10.1'
+          - '6.0'
+          - '6.0.1'
+          - '6.0.2'
+          - '6.0.3'
+          - '6.1'
+          - '6.1.1'
+          - '6.1.2'
         distribution:
           - debian-bullseye
           - debian-bookworm
@@ -49,8 +69,7 @@ jobs:
           - ubuntu-noble
           - raspios-bullseye
           - raspios-bookworm
-        arch: [armv7]
-    name: Install in GitHub Runner
+    name: Runner
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -60,7 +79,7 @@ jobs:
       with:
         swift-version: ${{ matrix.swift-version }}
         distribution: ${{ matrix.distribution }}
-        arch: ${{ matrix.arch }}
+        arch: armv7
     - name: Verify SDK
       shell: bash
       run: |
