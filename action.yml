@@ -3,6 +3,17 @@ description: This will download and install Swift compiled for Linux armhf and g
 inputs:
   swift-version:
     description: The Swift version of the SDK to install (MUST match host Swift version).
+    type: choice
+    options:
+      - '5.10'
+      - '5.10.1'
+      - '6.0'
+      - '6.0.1'
+      - '6.0.2'
+      - '6.0.3'
+      - '6.1'
+      - '6.1.1'
+      - '6.1.2'
     required: true
   distribution:
     description: Distribution name and release of the SDK to install.
