@@ -2,7 +2,7 @@
 
 This repo contains a GitHub action to download and install Swift built for Linux armhf (armv6 and armv7) distributions. This action is easily integrated into an existing CI and provides destination files that can be used to cross-compile any Swift package for the desired target.
 
-The SDKs that are built and hosted on [swift-armv7](https://github.com/xtremekforever/swift-armv7) are downloaded and installed. The following versions are supported:
+The SDKs that are built and hosted on [swift-armhf](https://github.com/xtremekforever/swift-armhf) are downloaded and installed. The following versions are supported:
 
 | Architecture | Swift Versions          | Supported Distributions                                |
 |--------------|-------------------------|--------------------------------------------------------|
