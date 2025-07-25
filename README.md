@@ -1,4 +1,4 @@
-# Swift armhf Actions
+# GitHub Action for Swift armhf (armv6 & armv7)
 
 This repo contains a GitHub action to download and install Swift built for Linux armhf (armv6 and armv7) distributions. This action is easily integrated into an existing CI and provides destination files that can be used to cross-compile any Swift package for the desired target.
 
@@ -22,10 +22,10 @@ Notes:
 
 ## Usage
 
-To start using the action, include the `xtremekforever/swift-armhf-actions@main` in a step:
+To start using the action, include `swift-embedded-linux/armhf-action@main` in a step:
 
 ```yml
-    - uses: xtremekforever/swift-armhf-actions@main
+    - uses: swift-embedded-linux/armhf-action@main
       name: Install armhf SDK
       id: armhf-sdk
       with:
