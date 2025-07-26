@@ -60,7 +60,7 @@ runs:
     shell: bash
     run: |
       SDK_NAME=swift-${{ inputs.swift-version }}-RELEASE-${{ inputs.distribution }}-${{ inputs.arch }}
-      wget https://github.com/xtremekforever/swift-armv7/releases/download/${{ inputs.swift-version }}/${SDK_NAME}-sdk.tar.gz
+      wget https://github.com/swift-embedded-linux/armhf-debian/releases/download/${{ inputs.swift-version }}/${SDK_NAME}-sdk.tar.gz
       tar -xf ${SDK_NAME}-sdk.tar.gz
 
       # Use sudo if not root
