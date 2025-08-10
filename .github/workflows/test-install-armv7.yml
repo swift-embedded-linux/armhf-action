@@ -2,6 +2,9 @@ name: Test Install SDKs (armv7)
 
 on:
   push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -22,11 +25,13 @@ jobs:
         distribution:
           - debian-bullseye
           - debian-bookworm
+          - debian-trixie
           - ubuntu-focal
           - ubuntu-jammy
           - ubuntu-noble
           - raspios-bullseye
           - raspios-bookworm
+          - raspios-trixie
     name: Container
     runs-on: ubuntu-latest
     container: swift:${{ matrix.swift-version }}
@@ -64,11 +69,13 @@ jobs:
         distribution:
           - debian-bullseye
           - debian-bookworm
+          - debian-trixie
           - ubuntu-focal
           - ubuntu-jammy
           - ubuntu-noble
           - raspios-bullseye
           - raspios-bookworm
+          - raspios-trixie
     name: Runner
     runs-on: ubuntu-latest
     steps:
