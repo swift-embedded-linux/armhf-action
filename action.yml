@@ -22,11 +22,13 @@ inputs:
     options:
       - debian-bullseye
       - debian-bookworm
+      - debian-trixie
       - ubuntu-focal
       - ubuntu-jammy
       - ubuntu-noble
       - raspios-bullseye
       - raspios-bookworm
+      - raspios-trixie
     required: true
   arch:
     description: Target architecture of the SDK to install.

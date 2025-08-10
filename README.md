@@ -4,10 +4,10 @@ This repo contains a GitHub action to download and install Swift built for Linux
 
 The SDKs that are built and hosted on [swift-armhf](https://github.com/xtremekforever/swift-armhf) are downloaded and installed. The following versions are supported:
 
-| Architecture | Swift Versions          | Supported Distributions                                |
-|--------------|-------------------------|--------------------------------------------------------|
-| armv6        | Swift 6.0 and later     | `raspios-bullseye` `raspios-bookworm`                  |
-| armv7        | Swift 5.10 and later    | `debian-bullseye` `debian-bookworm` `ubuntu-focal` `ubuntu-jammy` `ubuntu-noble` `raspios-bullseye` `raspios-bookworm` |
+| Architecture | Swift Versions          | Supported Distributions                                                |
+|--------------|-------------------------|------------------------------------------------------------------------|
+| armv6        | Swift 6.0 and later     | `raspios-bullseye` `raspios-bookworm` `raspios-trixie`                 |
+| armv7        | Swift 5.10 and later    | `debian-bullseye` `debian-bookworm` `debian-trixie` `ubuntu-focal` `ubuntu-jammy` `ubuntu-noble` `raspios-bullseye` `raspios-bookworm` `raspios-trixie` |
 
 The action is compatible with and has been tested to work with the following runners/environments:
 
