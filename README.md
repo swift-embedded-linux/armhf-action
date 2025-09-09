@@ -29,7 +29,7 @@ To start using the action, include `swift-embedded-linux/armhf-action@main` in a
       name: Install armhf SDK
       id: armhf-sdk
       with:
-        swift-version: 6.1.2
+        swift-version: 6.1.3
         distribution: debian-bookworm
         arch: armv7
 ```
