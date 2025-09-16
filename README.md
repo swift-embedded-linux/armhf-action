@@ -29,12 +29,15 @@ To start using the action, include `swift-embedded-linux/armhf-action@main` in a
       name: Install armhf SDK
       id: armhf-sdk
       with:
-        swift-version: 6.1.3
+        swift-version: 6.2
         distribution: debian-bookworm
         arch: armv7
 ```
 
 See [action.yml](action.yml) for a complete list of supported Swift versions and distributions.
+
+> [!WARNING]  
+> Cross-compiling Swift modules is broken when `.Cxx` interop is enabled due to this bug: https://github.com/swiftlang/swift/issues/83915. Some targets may work, but if you need C++ interop you may want to skip this release.
 
 The action provides the following outputs that can be used from other steps:
 
