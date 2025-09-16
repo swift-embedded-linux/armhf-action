@@ -37,7 +37,7 @@ To start using the action, include `swift-embedded-linux/armhf-action@main` in a
 See [action.yml](action.yml) for a complete list of supported Swift versions and distributions.
 
 > [!WARNING]  
-> Cross-compiling Swift modules is broken when `.Cxx` interop is enabled due to this bug: https://github.com/swiftlang/swift/issues/83915. Some targets may work, but if you need C++ interop you may want to skip this release.
+> Cross-compiling Swift modules with Swift 6.2 is broken when `.Cxx` interop is enabled due to this bug: https://github.com/swiftlang/swift/issues/83915. Some targets may work, but if you need C++ interop you may want to skip this release. The issue is fixed in Swift 6.2.1.
 
 The action provides the following outputs that can be used from other steps:
 
