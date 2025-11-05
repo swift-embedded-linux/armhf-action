@@ -22,6 +22,7 @@ jobs:
           - '6.1.2'
           - '6.1.3'
           - '6.2'
+          - '6.2.1'
         distribution:
           - raspios-bullseye
           - raspios-bookworm
@@ -60,6 +61,7 @@ jobs:
           - '6.1.2'
           - '6.1.3'
           - '6.2'
+          - '6.2.1'
         distribution:
           - raspios-bullseye
           - raspios-bookworm
