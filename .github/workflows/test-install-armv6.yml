@@ -30,7 +30,7 @@ jobs:
         use-container:
           - true
           - false
-    name: ${{ matrix.use-container && 'Container' || 'Runner' }}
+    name: ${{ matrix.use-container && 'Container' || 'Runner' }} (${{ matrix.swift-version }}, ${{ matrix.distribution }})
     runs-on: ubuntu-latest
     container: ${{ matrix.use-container && format('swift:{0}', matrix.swift-version) || '' }}
     steps:
