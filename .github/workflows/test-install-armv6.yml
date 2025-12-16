@@ -35,17 +35,8 @@ jobs:
     container: ${{ matrix.use-container && format('swift:{0}', matrix.swift-version) || '' }}
     steps:
     - uses: actions/checkout@v4
-    - name: Install SDK
-      uses: ./
-      id: target-sdk
+    - uses: ./.github/actions/test-install-sdk
       with:
         swift-version: ${{ matrix.swift-version }}
         distribution: ${{ matrix.distribution }}
         arch: armv6
-    - name: Verify SDK
-      shell: bash
-      run: |
-        set -x
-        ls -l /opt/${{ steps.target-sdk.outputs.sdk_name }}
-        cat ${{ steps.target-sdk.outputs.destination_json }}
-        cat ${{ steps.target-sdk.outputs.destination_static_json }}
