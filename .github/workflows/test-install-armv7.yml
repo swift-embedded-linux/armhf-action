@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  container:
+  test-armv7:
     strategy:
       fail-fast: false
       matrix:
@@ -35,55 +35,12 @@ jobs:
           - raspios-bullseye
           - raspios-bookworm
           - raspios-trixie
-    name: Container
+        use-container:
+          - true
+          - false
+    name: ${{ matrix.use-container && 'Container' || 'Runner' }}
     runs-on: ubuntu-latest
-    container: swift:${{ matrix.swift-version }}
-    steps:
-    - uses: actions/checkout@v4
-    - name: Install SDK
-      uses: ./
-      id: target-sdk
-      with:
-        swift-version: ${{ matrix.swift-version }}
-        distribution: ${{ matrix.distribution }}
-        arch: armv7
-    - name: Verify SDK
-      shell: bash
-      run: |
-        set -x
-        ls -l /opt/${{ steps.target-sdk.outputs.sdk_name }}
-        cat ${{ steps.target-sdk.outputs.destination_json }}
-        cat ${{ steps.target-sdk.outputs.destination_static_json }}
-
-  runner:
-    strategy:
-      fail-fast: false
-      matrix:
-        swift-version:
-          - '5.10'
-          - '5.10.1'
-          - '6.0'
-          - '6.0.1'
-          - '6.0.2'
-          - '6.0.3'
-          - '6.1'
-          - '6.1.1'
-          - '6.1.2'
-          - '6.1.3'
-          - '6.2'
-          - '6.2.1'
-        distribution:
-          - debian-bullseye
-          - debian-bookworm
-          - debian-trixie
-          - ubuntu-focal
-          - ubuntu-jammy
-          - ubuntu-noble
-          - raspios-bullseye
-          - raspios-bookworm
-          - raspios-trixie
-    name: Runner
-    runs-on: ubuntu-latest
+    container: ${{ matrix.use-container && format('swift:{0}', matrix.swift-version) || '' }}
     steps:
     - uses: actions/checkout@v4
     - name: Install SDK
