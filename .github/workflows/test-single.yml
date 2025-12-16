@@ -1,0 +1,41 @@
+name: Test Install SDK (Single)
+
+on:
+  workflow_dispatch:
+    inputs:
+      runner-version:
+        description: 'Runner Version'
+        required: false
+        default: 'ubuntu-latest'
+      use-container:
+        description: 'Use Container'
+        required: true
+        type: boolean
+        default: true
+      swift-version:
+        description: 'Swift Version'
+        required: true
+        default: '6.0'
+      distribution:
+        description: 'Linux Distribution'
+        required: true
+        default: 'debian-bookworm'
+      arch:
+        description: 'Target Architecture'
+        required: true
+        default: 'armv7'
+
+jobs:
+  test-single:
+    strategy:
+      fail-fast: false
+    name: ${{ inputs.use-container && 'Container' || 'Runner' }} (${{ inputs.swift-version }}, ${{ inputs.distribution }})
+    runs-on: ${{ inputs.runner-version }}
+    container: ${{ inputs.use-container && format('swift:{0}', inputs.swift-version) || '' }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: ./.github/actions/test-install-sdk
+      with:
+        swift-version: ${{ inputs.swift-version }}
+        distribution: ${{ inputs.distribution }}
+        arch: ${{ inputs.arch }}

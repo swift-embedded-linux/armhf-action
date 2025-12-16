@@ -1,0 +1,30 @@
+name: Test Install SDK
+description: Test installing and verifying the SDKs used by this repository.
+inputs:
+  swift-version:
+    description: 'Swift Version'
+    required: true
+  distribution:
+    description: 'Linux Distribution'
+    required: true
+  arch:
+    description: 'Target Architecture'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install SDK
+      uses: ./
+      id: target-sdk
+      with:
+        swift-version: ${{ inputs.swift-version }}
+        distribution: ${{ inputs.distribution }}
+        arch: ${{ inputs.arch }}
+    - name: Verify SDK
+      shell: bash
+      run: |
+        set -x
+        ls -l /opt/${{ steps.target-sdk.outputs.sdk_name }}
+        cat ${{ steps.target-sdk.outputs.destination_json }}
+        cat ${{ steps.target-sdk.outputs.destination_static_json }}
