@@ -27,6 +27,7 @@ jobs:
           - '6.2.1'
           - '6.2.2'
           - '6.2.3'
+          - '6.2.4'
         distribution:
           - debian-bullseye
           - debian-bookworm
